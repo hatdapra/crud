@@ -1,0 +1,28 @@
+{
+  "Elements" : [
+    {"id": 1, "name": "Hydrogen", "weight": 10},
+    {"id": 2, "name": "Helium", "weight": 10},
+    {"id": 3, "name": "Lithium", "weight": 10},
+    {"id": 4, "name": "Beryllium", "weight": 10},
+    {"id": 5, "name": "Boron", "weight": 10},
+    {"id": 6, "name": "Carbon", "weight": 10},
+    {"id": 7, "name": "Nitrogen", "weight": 10},
+    {"id": 8, "name": "Oxygen", "weight": 10},
+    {"id": 9, "name": "Fluorine", "weight": 10},
+    {"id": 10, "name": "Neon", "weight": 10},
+    {"id": 11, "name": "Sodium", "weight": 10},
+    {"id": 12, "name": "Magnesium", "weight": 10},
+    {"id": 13, "name": "Aluminum", "weight": 10},
+    {"id": 14, "name": "Silicon", "weight": 10},
+    {"id": 15, "name": "Phosphorus", "weight": 10},
+    {"id": 16, "name": "Sulfur", "weight": 10},
+    {"id": 17, "name": "Chlorine", "weight": 10},
+    {"id": 18, "name": "Argon", "weight": 10},
+    {"id": 19, "name": "Potassium", "weight": 10},
+    {"id": 20, "name": "Calcium", "weight": 10}
+  ],
+  "cities" : [
+    {}
+  ]
+
+}
