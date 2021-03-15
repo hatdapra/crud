@@ -27,9 +27,7 @@ export class CityTableComponent implements OnInit {
   ngOnInit(): void {
     this.dataSubscription = this.base.getAll(this.dataType).subscribe(
       (data) => {
-        this.dataSource.data = (data as unknown as City[]);
-        console.log(this.dataSource.data);
-        
+        this.dataSource.data = (data as unknown as City[]);        
       }
     )
 

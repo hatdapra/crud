@@ -29,7 +29,7 @@ export class ConfigService {
     elements: [
       {fieldName: 'position', displayName: 'Rsz.', inputType: "id"},
       {fieldName: 'name', displayName: 'Név', inputType: "text", style: "width: 25%;"},
-      {fieldName: 'weight', displayName: 'Súly', inputType: "text", style: "width: 25%;"},
+      {fieldName: 'weight', displayName: 'Súly', inputType: "number", style: "width: 25%;"},
       {fieldName: 'symbol', displayName: 'Vegyjel', inputType: "text", style: "width: 25%;"}
     ],
     city: [

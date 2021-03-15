@@ -1,19 +1,24 @@
 <mat-card class="cardDiv mat-elevation-z1">
   <div class="formDiv">
-    <form>
+    <form  #f="ngForm" (submit)="submitForm(f)">
       <ng-container *ngFor="let col of cols; let i = index">
         
-        <ng-container *ngIf="col.inputType == 'text'">
+        <ng-container *ngIf="col.inputType != 'id'">
           
           <!-- <mat-form-field style="margin-right: 1rem"> -->
           <mat-form-field [style]="col.style">
             <mat-label> {{ col.displayName }} </mat-label>
             <input
-              [attr.tag]="col.fieldName"
-              type="text" 
+              [name]="dataType"
+              [attr.dataType]="dataType"
+              [formControl]="myFormControls[col.fieldName]"
+              [type]="col.inputType" 
               matInput 
+              required
               />
-            
+            <span *ngIf="">
+
+            </span>
           </mat-form-field>
         
         </ng-container>
@@ -23,6 +28,7 @@
         type="submit"
         mat-raised-button 
         class="addBtn"
+        [disabled]="f.invalid"
         >
         <mat-icon>add</mat-icon>
       </button>

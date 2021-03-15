@@ -1,0 +1,33 @@
+<!-- <div class="examplediv">
+  <form [formGroup]="profileForm" >
+    <div *ngFor="let item of formsElements" class="form-control">
+      <label for="item.key">{{ item.display }}: {{ item.key }}</label>
+      <input type="text" formControlName="{{item.key}}" required>
+    </div>
+    <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+  </form>
+</div>  
+
+<p>
+  Form Value: {{ profileForm.value | json }}
+</p> -->
+
+<mat-card class="cardDiv mat-elevation-z2">
+  <form [formGroup]="profileForm" (ngSubmit)="submitForm()" >
+    <ng-container *ngFor="let item of formsElements">
+      <mat-form-field class="form-field" style="margin-right: 1rem">
+        <mat-label>{{ item.display }}</mat-label>
+        <input matInput type="text" formControlName="{{ item.key }}" required />
+        <mat-hint class="alert-danger" *ngIf="profileForm.get(item.key)?.invalid && (profileForm.get(item.key)?.dirty || profileForm.get(item.key)?.touched)">A mező kitöltése kötelező!</mat-hint>
+      </mat-form-field>
+    </ng-container>
+    <button type="submit" mat-raised-button  [disabled]="!profileForm.valid" class="addBtn"><mat-icon>add</mat-icon></button>
+  </form>
+</mat-card>
+<mat-card class="cardDiv mat-elevation-z2">
+  <p>Form Status: {{ profileForm.status }}</p>
+  
+  <p>Form Value: {{ profileForm.value | json }}</p>
+
+  <p>Dirty? {{ profileForm.controls.name.dirty }}</p>
+</mat-card>

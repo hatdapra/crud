@@ -28,8 +28,6 @@ export class ElementsTableComponent implements OnInit, AfterViewInit {
     this.dataSubscription = this.base.getAll(this.dataType).subscribe(
       (data) => {
         this.dataSource.data = (data as unknown as Elements[]);
-        console.log(this.dataSource.data);
-        
       }
     )
 

@@ -24,6 +24,7 @@ import { MatTableComponent } from './temp/mat-table/mat-table.component';
 import { CityTableComponent } from './parts/city-table/city-table.component';
 
 import { getHunPaginatorIntl } from './hun-paginator-intl';
+import { MainFormComponent } from './temp/main-form/main-form.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { getHunPaginatorIntl } from './hun-paginator-intl';
     ElementsTableComponent,
     TableComponent,
     MatTableComponent,
-    CityTableComponent
+    CityTableComponent,
+    MainFormComponent
   ],
   imports: [
     BrowserModule,
