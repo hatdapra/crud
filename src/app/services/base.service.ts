@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { City, DataField, Elements } from './config.service';
 
@@ -13,36 +13,56 @@ export class BaseService {
 
   constructor(private http: HttpClient) { }
 
-  getDisplayedCols(fieldsArray: DataField[]): string[]{
+  getDisplayedCols(fieldsArray: DataField[]): string[] {
     let fields: string[] = [];
 
     for (let i = 0; i < fieldsArray.length; i++) {
-     fields.push(fieldsArray[i].fieldName);
-      
+      fields.push(fieldsArray[i].fieldName);
     }
 
     return fields;
   }
-
-  getAll(dataType: string): Observable<any[]>{
+  
+  getAll(dataType: string): Observable<any> {
     let url = `${this.apiUrl}${dataType}`;
     let res: Observable<any> = new Observable;
 
+    if (!this.observables[dataType]) {
+      this.observables[dataType] = new Subject;
+    }
+
     switch (dataType) {
       case 'elements':
-        return this.http.post<Elements[]>(this.phpUrl, JSON.stringify({flag: dataType}));
-        break;
+        this.http.post<Elements[]>(this.phpUrl, JSON.stringify({ flag: dataType }))
+          .forEach(
+            data => this.observables[dataType].next(data)
+          );
 
-      case 'city':
-        return this.http.post<City[]>(this.phpUrl, JSON.stringify({flag: dataType}));
-        
         break;
-      
+      case 'city':
+        this.http.post<City[]>(this.phpUrl, JSON.stringify({ flag: dataType }))
+          .forEach(
+            data => this.observables[dataType].next(data)
+          );
+
+        break;
       default:
         break;
     }
+    return this.observables[dataType];
+  }
 
-       
-    return res;
+  insertNewRecord(dataType: string, data: Element | City): void {
+    console.log(data);
+
+    /* this.http.post(this.phpUrl, JSON.stringify({ flag: `${dataType}_insert`, data: data }))
+      .forEach(resp => this.getAll(dataType)); */
+
+    this.http.post(this.phpUrl, JSON.stringify({ flag: `${dataType}_insert`, data: data }))
+      .toPromise().then(
+        resp => this.getAll(dataType),
+        err => console.error(err)
+        );
+
   }
 }

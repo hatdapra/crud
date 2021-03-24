@@ -1,58 +1,55 @@
 <mat-card class="cardDiv mat-elevation-z1">
   <div class="formDiv">
-    <form  #f="ngForm" (submit)="submitForm(f)">
+    <form [formGroup]="addForm" (ngSubmit)="submitForm()">
       <ng-container *ngFor="let col of cols; let i = index">
-        
-        <ng-container *ngIf="col.inputType != 'id'">
-          
+        <ng-container *ngIf="col.showInput">
           <!-- <mat-form-field style="margin-right: 1rem"> -->
-          <mat-form-field [style]="col.style">
+          <mat-form-field [style]="col.inputStyle">
             <mat-label> {{ col.displayName }} </mat-label>
             <input
               [name]="dataType"
               [attr.dataType]="dataType"
-              [formControl]="myFormControls[col.fieldName]"
-              [type]="col.inputType" 
-              matInput 
+              formControlName="{{ col.fieldName }}"
+              [type]="col.inputType"
+              matInput
               required
-              />
-            <span *ngIf="">
-
-            </span>
+            />
+            <mat-hint class="alert-danger" *ngIf="addForm.get(col.fieldName)?.invalid && (addForm.get(col.fieldName)?.dirty || addForm.get(col.fieldName)?.touched)">A mező kitöltése kötelező!</mat-hint>
           </mat-form-field>
-        
         </ng-container>
-      
       </ng-container>
-      <button 
+      <button
         type="submit"
-        mat-raised-button 
+        mat-raised-button
         class="addBtn"
-        [disabled]="f.invalid"
-        >
+        [disabled]="addForm.invalid"
+      >
         <mat-icon>add</mat-icon>
       </button>
     </form>
   </div>
 
-
   <div class="tableDiv">
     <table mat-table [dataSource]="dataSource">
-      <ng-container
-        *ngFor="let col of cols"
-        [matColumnDef]="col.fieldName"
-      >
-        <th mat-header-cell *matHeaderCellDef>{{ col.displayName }}</th>
+      <ng-container *ngFor="let col of cols" [matColumnDef]="col.fieldName">
+        <th mat-header-cell *matHeaderCellDef [style]="col.style">{{ col.displayName }}</th>
         <td mat-cell *matCellDef="let element">
           <div *ngIf="col.fieldName !== 'actions'; else actionBlock">
             {{ element[col.fieldName] }}
           </div>
           <ng-template #actionBlock>
-            <!-- <app-btn-grp [btnGrp]="btnGrp"></app-btn-grp> -->
+            <div class="mat-btn-group">
+              <button mat-raised-button class="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-raised-button class="danger">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
           </ng-template>
         </td>
       </ng-container>
-  
+
       <tr mat-header-row *matHeaderRowDef="displayedCols"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedCols"></tr>
     </table>
@@ -62,4 +59,5 @@
     showFirstLastButtons
   ></mat-paginator>
 </mat-card>
+
 

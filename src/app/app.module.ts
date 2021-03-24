@@ -14,6 +14,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +26,9 @@ import { CityTableComponent } from './parts/city-table/city-table.component';
 
 import { getHunPaginatorIntl } from './hun-paginator-intl';
 import { MainFormComponent } from './temp/main-form/main-form.component';
+import { AddDialogComponent } from './parts/add-dialog/add-dialog.component';
+
+// npm cache clear --force
 
 @NgModule({
   declarations: [
@@ -33,7 +37,8 @@ import { MainFormComponent } from './temp/main-form/main-form.component';
     TableComponent,
     MatTableComponent,
     CityTableComponent,
-    MainFormComponent
+    MainFormComponent,
+    AddDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +57,7 @@ import { MainFormComponent } from './temp/main-form/main-form.component';
     MatButtonModule,
     MatIconModule,
     MatSortModule,
+    MatDialogModule
   ],
   providers: [{ provide: MatPaginatorIntl, useValue: getHunPaginatorIntl() }],
   bootstrap: [AppComponent]

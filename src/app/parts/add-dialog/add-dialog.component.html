@@ -1,0 +1,26 @@
+<div class="dialogDiv">
+  <form action=""  fxLayout="column">
+    <mat-form-field>
+      <mat-label>Név</mat-label>
+      <input 
+        matInput
+        type="text">
+    </mat-form-field>  
+    <mat-form-field>
+      <mat-label>Súly</mat-label>
+      <input 
+        matInput
+        type="text">
+    </mat-form-field>  
+    <mat-form-field>
+      <mat-label>Vegyjel</mat-label>
+      <input 
+        matInput
+        type="text">
+    </mat-form-field>  
+    <div class="mat-btn-group">
+      <button mat-raised-button type="submit" color="primary" class="Update-btn" (click)="onaddCus()">Save</button>
+      <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+  </form>
+</div>
