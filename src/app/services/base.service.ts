@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { City, DataField, Elements } from './config.service';
+import { DialogsService } from './dialogs.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class BaseService {
   phpUrl: string = "http://dhsrv/tools/crud/tools.php";
   observables: any = {};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dialog: DialogsService) { }
 
   getDisplayedCols(fieldsArray: DataField[]): string[] {
     let fields: string[] = [];
@@ -22,7 +23,18 @@ export class BaseService {
 
     return fields;
   }
-  
+
+  getIDField(fieldsArray: any[]): string{
+    let field: string = "";
+    for (let i = 0; i < fieldsArray.length; i++) {
+      if(fieldsArray[i].inputType == 'id'){
+        field = fieldsArray[i].fieldName;
+      }      
+    }
+
+    return field;
+  }
+
   getAll(dataType: string): Observable<any> {
     let url = `${this.apiUrl}${dataType}`;
     let res: Observable<any> = new Observable;
@@ -53,16 +65,25 @@ export class BaseService {
   }
 
   insertNewRecord(dataType: string, data: Element | City): void {
-    console.log(data);
-
-    /* this.http.post(this.phpUrl, JSON.stringify({ flag: `${dataType}_insert`, data: data }))
-      .forEach(resp => this.getAll(dataType)); */
-
     this.http.post(this.phpUrl, JSON.stringify({ flag: `${dataType}_insert`, data: data }))
       .toPromise().then(
         resp => this.getAll(dataType),
         err => console.error(err)
-        );
+      );
+  }
 
+  updateRecord(dataType: string, data: Element | City): void {
+    this.http.post(this.phpUrl, JSON.stringify({ flag: `${dataType}_update`, data: data }))
+      .toPromise().then(
+        resp => {
+          this.dialog.openSnackBar(3000, "A váltotatások elmentése sikerült.");
+          this.getAll(dataType)
+        },
+        err => console.error(err)
+      );
+  }
+
+  deleteRecord(id: any): void{
+    this.dialog.openSnackBar(3000, `A törlés sikerült. (${id})`);  
   }
 }

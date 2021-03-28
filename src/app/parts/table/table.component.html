@@ -35,7 +35,6 @@
         <mat-icon>add</mat-icon>
       </button>
     </form>
-    
   </div>
 
   <div class="tableDiv">
@@ -53,7 +52,7 @@
               <button
                 mat-raised-button
                 class="primary"
-                (click)="onDelete(element)"
+                (click)="onUpdate(element)"
               >
                 <mat-icon>edit</mat-icon>
               </button>
@@ -80,25 +79,44 @@
 </mat-card>
 
 <!-- edit dialog template -->
-
 <ng-template #dialogTemplate let-data>
   <h3 class="custom-dialog-title">{{ data.title }}</h3>
   <form [formGroup]="editForm" fxLayout="column">
     <ng-container *ngFor="let col of data.cols">
-      <mat-form-field *ngIf="col.fieldName !== 'actions'">
-        <mat-label> {{ col.fieldName }} </mat-label>
-        <input
-          matInput
-          type="text"
-          required
-          formControlName="{{ col.fieldName }}"
-        />
-      </mat-form-field>
+      <ng-container *ngIf="col.showInput">
+        <mat-form-field *ngIf="col.fieldName !== 'actions'">
+          <mat-label> {{ col.displayName }} </mat-label>
+          <input
+            matInput
+            type="text"
+            required
+            formControlName="{{ col.fieldName }}"
+          />
+          <mat-hint
+            class="alert-danger"
+            *ngIf="
+              editForm.get(col.fieldName)?.invalid &&
+              (editForm.get(col.fieldName)?.dirty ||
+                editForm.get(col.fieldName)?.touched)
+            "
+            >A mező kitöltése kötelező!</mat-hint
+          >
+        </mat-form-field>
+      </ng-container>
     </ng-container>
     <div class="btn-group custom-dialog-buttons">
       <button class="btn btn-secondary" [mat-dialog-close]="">Cancel</button>
       <button class="btn btn-primary" [mat-dialog-close]="data">Ok</button>
     </div>
   </form>
-  {{ data.content | json }}
+</ng-template>
+
+<!-- delete dialog template -->
+<ng-template #deleteDialogTemplate let-data>
+  <h3 class="custom-dialog-title">{{ data.title }}</h3>  
+  <p class="custom-dialog-content">{{ data.content }}</p>
+  <div class="btn-group custom-dialog-buttons">
+    <button class="btn btn-secondary" [mat-dialog-close]="">Nem</button>
+    <button class="btn btn-primary" [mat-dialog-close]="data">Igen</button>
+  </div>
 </ng-template>

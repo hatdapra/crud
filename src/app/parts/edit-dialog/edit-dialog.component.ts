@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export interface iDialogData{
   cols: any[];
   title: string;
-  content: any[];
+  content: any[] | string;
   template?: any
 }
 

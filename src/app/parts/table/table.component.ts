@@ -23,6 +23,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild('dialogTemplate') dialogTemplate: TemplateRef<any> | undefined;
+  @ViewChild('deleteDialogTemplate') deleteDialogTemplate: TemplateRef<any> | undefined;
 
   dataSubscription: Subscription = new Subscription;
   addForm: FormGroup = new FormGroup({});
@@ -59,15 +60,10 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   }
 
-  onDelete(row: any): void{
+  onUpdate(row: any): void{
     let content: any = {};
     
     this.editForm = new FormGroup({});
-
-    /* for (const key in row) {
-      content.push({fieldName: key, value: row[key]});
-      
-    } */
 
     for (let i = 0; i < this.cols.length; i++) {
       if(row[this.cols[i].fieldName]){
@@ -77,11 +73,11 @@ export class TableComponent implements OnInit, AfterViewInit {
       }
       
     }
-    console.log('row: ', row);    
+    // console.log('row: ', row);    
     
     const dialogData: iDialogData = {
       cols: this.cols,
-      title: 'Are you sure?',
+      title: 'Adatok módosítása',
       content: content ,
       template: this.dialogTemplate
     }
@@ -93,11 +89,36 @@ export class TableComponent implements OnInit, AfterViewInit {
         for (const key in content) {
           content[key] = this.editForm.get(key)?.value;
         }
-        console.log('mainData:',content);
+        
+        this.base.updateRecord(this.dataType, content);
         
       }
     );
     
+  }
+
+  onDelete(row: any): void{
+    const dialogData: iDialogData = {
+      cols: this.cols,
+      title: 'Adatok törlése',
+      content: 'A kiválasztott adatok törlődnek. Biztos vagy benne?' ,
+      template: this.deleteDialogTemplate
+    }
+
+    this.dialogService.openEditDialog(dialogData).pipe(
+      take(1)
+    ).subscribe(
+      res => {
+        if(!res){
+          return;
+        }
+
+        let idField =this.base.getIDField(this.cols);
+
+        this.base.deleteRecord(row[idField]);
+      }
+      
+    )
   }
 
 }
