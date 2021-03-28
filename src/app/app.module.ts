@@ -26,7 +26,7 @@ import { CityTableComponent } from './parts/city-table/city-table.component';
 
 import { getHunPaginatorIntl } from './hun-paginator-intl';
 import { MainFormComponent } from './temp/main-form/main-form.component';
-import { AddDialogComponent } from './parts/add-dialog/add-dialog.component';
+import { EditDialogComponent } from './parts/edit-dialog/edit-dialog.component';
 
 // npm cache clear --force
 
@@ -38,7 +38,7 @@ import { AddDialogComponent } from './parts/add-dialog/add-dialog.component';
     MatTableComponent,
     CityTableComponent,
     MainFormComponent,
-    AddDialogComponent
+    EditDialogComponent,
   ],
   imports: [
     BrowserModule,
